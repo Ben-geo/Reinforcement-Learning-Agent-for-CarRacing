@@ -3,17 +3,19 @@ import gym
 from collections import deque
 from agent import agent,memory
 from preprocess import preProcess
+import numpy as np
 
-
-EPISODES = 25
+EPISODES = 1000
 SKIP_INTIAL_FRAMES = 50
+FRAMES_PER_ACTION = 25
+BATCH_SIZE = memory.size
 
 env = gym.make("CarRacing-v2",render_mode="human")
 agent.model.summary()
-agent.model.load_weights(r"C:\Users\Dell\Downloads\77.h5")
+agent.model.load_weights(r"C:\Users\Dell\Downloads\1995.h5")
 
 print("Sa")
-for e in range(EPISODES):
+for episode in range(EPISODES):
 
     init_state = env.reset()[0]
 
@@ -35,18 +37,30 @@ for e in range(EPISODES):
 
         action = agent.act(current_state)
         
-        next_state, reward, done, info,d = env.step(action)
-
+        reward = 0
+        for i in range(FRAMES_PER_ACTION):
+            next_state, r, done, info,d = env.step(action)
+            reward +=r
+        
         total_reward += reward
-        next_state = preProcess.process(next_state)
-
-
-        memory.add([current_state,action,reward,next_state])
-
-
-        current_state = next_state
-        if time_step%5==0:
-            agent.update_model()
-
-        if done:
+        print(reward)
+        if reward<0:
+            negative_reward_counter+=1
+        else:
+            negative_reward_counter = 0
+        
+        if total_reward<0:
+            print("TOTAL_REWARD")
             break
+        if negative_reward_counter>=5:
+            print("NEG REWARD")
+            break
+        next_state = preProcess.process(next_state)
+        memory.add([current_state,action,reward,next_state])
+        current_state = next_state
+        
+        agent.learn()
+        
+    if episode%5==0:
+        agent.update_model()
+        

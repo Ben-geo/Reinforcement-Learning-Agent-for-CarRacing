@@ -9,8 +9,10 @@ import random
 import cv2
 from preprocess import preProcess
 
+BATCH_SIZE = 64
 class Memory():
     def __init__(self, max_size):
+        self.size = max_size
         self.buffer = deque(maxlen = max_size)
     
     def add(self, experience):
@@ -19,11 +21,11 @@ class Memory():
     def sample(self, batch_size):
         buffer_size = len(self.buffer)
         index = np.random.choice(np.arange(buffer_size),
-                                size = batch_size,
+                                size = buffer_size,
                                 replace = False)
         
         return [self.buffer[i] for i in index]
-memory=Memory(5)
+memory=Memory(BATCH_SIZE)
 
 class Agent:
     def __init__(
@@ -77,15 +79,15 @@ class Agent:
     def update_model( self ):
         self.target_model.set_weights( self.model.get_weights() )
 
-    def learn(self,sample):
+    def learn(self):
         train_state = []
         train_reward = []
-        for state,action,reward,next_state in memory.sample(3):
+        for state,action,reward,next_state in memory.sample(min(memory.size,64)):
             
             target = agent.model.predict(tf.expand_dims(state,0),verbose = 0)[0]
             
             
-            t = self.target_model.predict(np.expand_dims(next_state, axis=0))[0]
+            t = self.target_model.predict(np.expand_dims(next_state, axis=0),verbose = 0)[0]
             target[ self.action_space.index(action) ] = reward + self.gamma * np.amax(t)
 
             train_state.append(state)
