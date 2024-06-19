@@ -10,11 +10,12 @@ SKIP_INTIAL_FRAMES = 50
 FRAMES_PER_ACTION = 25
 BATCH_SIZE = memory.size
 
+#REMEMBER TO CHANGE ACTION SPACE
+
 env = gym.make("CarRacing-v2",render_mode="human")
 agent.model.summary()
-agent.model.load_weights(r"C:\Users\Dell\Downloads\1995.h5")
-
-print("Sa")
+agent.model.load_weights(r"C:\Users\Dell\Downloads\DQN700.h5")
+print("S0a")
 for episode in range(EPISODES):
 
     init_state = env.reset()[0]
@@ -52,15 +53,18 @@ for episode in range(EPISODES):
         if total_reward<0:
             print("TOTAL_REWARD")
             break
-        if negative_reward_counter>=5:
-            print("NEG REWARD")
+        if negative_reward_counter>5:
+            print("NEG REWARD",negative_reward_counter)
             break
         next_state = preProcess.process(next_state)
         memory.add([current_state,action,reward,next_state])
         current_state = next_state
         
-        agent.learn()
-        
-    if episode%5==0:
-        agent.update_model()
-        
+        if memory.size>=BATCH_SIZE:
+            print("LEARNING",total_reward)
+            agent.learn()
+            agent.update_model()
+    print(episode)
+    if episode%20==0:
+        print("Saved")
+        agent.save_model("DQN",episode)

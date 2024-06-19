@@ -95,6 +95,10 @@ class Agent:
 
         train_state=np.array(train_state)
         train_reward=np.array(train_reward)
+        print(train_state.shape,train_reward.shape)
         self.model.fit(train_state,train_reward,epochs=1,verbose = 0)
+    def save_model(self,model_name,epoch):
+        path="/utils/saved_models/"+str(model_name)+str(epoch)+".h5"
+        self.model.save(path)
         
 agent=Agent()
