@@ -10,7 +10,7 @@ SKIP_INTIAL_FRAMES = 50
 FRAMES_PER_ACTION = 25
 BATCH_SIZE = memory.size
 
-#REMEMBER TO CHANGE ACTION SPACE
+
 
 env = gym.make("CarRacing-v2",render_mode="human")
 agent.model.summary()
