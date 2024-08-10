@@ -2,7 +2,7 @@ import torch
 from torch import nn
 import torch.nn.functional as F
 import numpy as np
-import preProcess
+from preprocess import preProcess
 from torch.optim import Adam
 from torch.distributions import MultivariateNormal
 
@@ -43,20 +43,20 @@ class PPOAgent:
         self.obs_dim = (1,96,96)
         self.act_dim = 3
         self.env = env
-        self.timesteps_per_batch = 4800                 # Number of timesteps to run per batch
-        self.max_timesteps_per_episode = 1600           # Max number of timesteps per episode
-        self.n_updates_per_iteration = 5                # Number of times to update actor/critic per iteration
-        self.lr = 0.005                                 # Learning rate of actor optimizer
-        self.gamma = 0.95                               # Discount factor to be applied when calculating Rewards-To-Go
-        self.clip = 0.2                                 # Recommended 0.2, helps define the threshold to clip the ratio during SGA
+        self.timesteps_per_batch = 4800                
+        self.max_timesteps_per_episode = 1600          
+        self.n_updates_per_iteration = 5              
+        self.lr = 0.005                                
+        self.gamma = 0.95                              
+        self.clip = 0.2                               
 
 
         self.render = False                             
-        self.save_freq = 10                             # How often we save
+        self.save_freq = 10                            
         self.deterministic = False                      
         self.seed = None
         
-        self.actor = network_class(self.obs_dim, self.act_dim)                                                   # ALG STEP 1
+        self.actor = network_class(self.obs_dim, self.act_dim)                                                   
         self.critic = network_class(self.obs_dim, 1)
         
         self.actor_optim = Adam(self.actor.parameters(), lr=self.lr)
@@ -65,11 +65,11 @@ class PPOAgent:
         self.cov_var = torch.full(size=(self.act_dim,), fill_value=0.5)
         self.cov_mat = torch.diag(self.cov_var)
         self.logger = {
-            't_so_far': 0,          # timesteps so far
-            'i_so_far': 0,          # iterations so far
-            'batch_lens': [],       # episodic lengths in batch
-            'batch_rews': [],       # episodic returns in batch
-            'actor_losses': [],     # losses of actor network in current iteration
+            't_so_far': 0,         
+            'i_so_far': 0,         
+            'batch_lens': [],       
+            'batch_rews': [],      
+            'actor_losses': [],     
         }
     def learn(self, total_timesteps):
         """

@@ -17,3 +17,6 @@ Deep Q-Learning is a type of reinforcement learning algorithm that uses a deep n
 
 Experience replay is a technique where the agent stores a subset of its experiences (state, action, reward, next state) in a memory buffer and samples from this buffer to update the Q-function. This helps to decorrelate the data and make the learning process more stable. Target networks, on the other hand, are used to stabilize the Q-function updates. In this technique, a separate network is used to compute the target Q-values, which are then used to update the Q-function network.
 
+### Proximal Policy Optimization
+
+![](/utils/images/DeepQ.jpg)
