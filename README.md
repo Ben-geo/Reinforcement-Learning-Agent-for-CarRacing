@@ -20,11 +20,11 @@ Experience replay is a technique where the agent stores a subset of its experien
 ### Proximal Policy Optimization
 
 Main changes : 
-    * Policy-Based Method - 
-        Policy : a function that maps states to action
+* Policy-Based Method - 
+    Policy : a function that maps states to action
         PPO focuses on this funcion itself
-    * Clipped Objective -
-        revent the policy from changing too much in a single update.
+* Clipped Objective -
+    revent the policy from changing too much in a single update.
 
 #### Steps 
 * Initial Policy: At the start, the robot's policy is random. It might take some steps correctly but often fall.
