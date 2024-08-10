@@ -9,7 +9,7 @@
 * **preprocess.py :** Functions to preprocess the states
 
 
-### Deep Q Learning
+## Deep Q Learning
 
 
 ![](/utils/images/DeepQ.jpg)
@@ -17,7 +17,7 @@ Deep Q-Learning is a type of reinforcement learning algorithm that uses a deep n
 
 Experience replay is a technique where the agent stores a subset of its experiences (state, action, reward, next state) in a memory buffer and samples from this buffer to update the Q-function. This helps to decorrelate the data and make the learning process more stable. Target networks, on the other hand, are used to stabilize the Q-function updates. In this technique, a separate network is used to compute the target Q-values, which are then used to update the Q-function network.
 
-### Proximal Policy Optimization
+## Proximal Policy Optimization
 
 Main changes : 
 * **Policy-Based Method** - 
@@ -32,4 +32,3 @@ Main changes :
 Updating the Policy: PPO then updates the policy based on this experience. The update is done in a way that improves the policy, but not too drastically, to ensure the robot's learning is stable.
     * Clipping: PPO introduces a clipping mechanism to ensure that the robot's policy doesn't change too much in one step, avoiding situations where the robot suddenly starts behaving erratically.
 * Improved Policy: Over time, the policy gets better. The robot starts to fall less often and walks more steadily.
-![](/utils/images/DeepQ.jpg)
