@@ -20,16 +20,16 @@ Experience replay is a technique where the agent stores a subset of its experien
 ### Proximal Policy Optimization
 
 Main changes : 
-* Policy-Based Method - 
+* **Policy-Based Method** - 
     Policy : a function that maps states to action
         PPO focuses on this funcion itself
-* Clipped Objective -
+* **Clipped Objective** -
     revent the policy from changing too much in a single update.
 
 #### Steps 
 * Initial Policy: At the start, the robot's policy is random. It might take some steps correctly but often fall.
-Collecting Experience: The robot interacts with the environment (walks, falls, walks again), and PPO collects this experience—tracking the states, actions, and rewards.
+* Collecting Experience: The robot interacts with the environment (walks, falls, walks again), and PPO collects this experience—tracking the states, actions, and rewards.
 Updating the Policy: PPO then updates the policy based on this experience. The update is done in a way that improves the policy, but not too drastically, to ensure the robot's learning is stable.
-Clipping: PPO introduces a clipping mechanism to ensure that the robot's policy doesn't change too much in one step, avoiding situations where the robot suddenly starts behaving erratically.
-Improved Policy: Over time, the policy gets better. The robot starts to fall less often and walks more steadily.
+    * Clipping: PPO introduces a clipping mechanism to ensure that the robot's policy doesn't change too much in one step, avoiding situations where the robot suddenly starts behaving erratically.
+* Improved Policy: Over time, the policy gets better. The robot starts to fall less often and walks more steadily.
 ![](/utils/images/DeepQ.jpg)
